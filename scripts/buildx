@@ -23,12 +23,13 @@ docker buildx build \
 	--build-arg BUILD_DATE="$(date '+%Y-%m-%d %T %Z')" \
 	--build-arg GOPROXY="${GOPROXY:-}" \
 	--build-arg GOPRIVATE="${GOPRIVATE:-}" \
-	--platform linux/amd64,linux/arm64,linux/arm/7 \
+	--platform linux/amd64 \
 	--progress plain \
 	--pull \
 	-f docker/Dockerfile \
 	$@ \
-	.
+	. \
+	> nginx-proxy-manager-oidc.tar
 
 rc=$?
 docker buildx rm "${BUILDX_NAME:-npm}"
