@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# ./scripts/ci/frontend-build  
+# ./scripts/buildx -t nginx-proxy-manager:2.10.4-oidc
+# docker save nginx-proxy-manager:2.10.4-oidc > ./nginx-proxy-manager-oidc.tar
+# scp ./nginx-proxy-manager-oidc.tar proxy.geo-satis.com:/home/dandrei
+
 BUILD_VERSION=$(cat ../.version)
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -28,10 +33,10 @@ docker buildx build \
 	--platform linux/amd64 \
 	--progress plain \
 	--pull \
+	--load \
 	-f docker/Dockerfile \
 	$@ \
-	. \
-	> nginx-proxy-manager-oidc.tar
+	. 
 
 rc=$?
 docker buildx rm "${BUILDX_NAME:-npm}"
