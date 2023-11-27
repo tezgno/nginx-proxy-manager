@@ -15,5 +15,5 @@ jobs:
     - name: Build the Docker image and push to GHCR
       run: |
         docker login --username tezgno --password ${{ secrets.GH_PAT }} ghcr.io
-        docker build . --file docker/Dockerfile --tag ghcr.io/tezgno/nginx-proxy-manager:oidc
+        docker buildx . --file docker/Dockerfile --tag ghcr.io/tezgno/nginx-proxy-manager:oidc
         docker push ghcr.io/tezgno/nginx-proxy-manager:oidc        
