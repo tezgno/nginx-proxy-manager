@@ -1,0 +1,19 @@
+name: Docker Image CI for GHCR
+
+on:
+  push:
+    branches: [ "oidc" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image and push to GHCR
+      run: |
+        docker login --username tezgno --password ${{ secrets.GH_PAT }} ghcr.io
+        docker build . --file Dockerfile --tag ghcr.io/tezgno/nginx-proxy-manager:oidc
+        docker push ghcr.io/tezgno/nginx-proxy-manager:oidc        
